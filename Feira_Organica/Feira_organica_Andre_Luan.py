@@ -1,3 +1,4 @@
+from numpy.core.fromnumeric import var
 import pandas as pd
 from reportlab.pdfgen import canvas as cv
 
@@ -9,6 +10,22 @@ df_outros = pd.read_csv('Outros.csv')
 df_pasti = pd.read_csv('Pastinhas_ante.csv')
 df_raizes = pd.read_csv('Raizes.csv')
 
+
+def calcular_preco(quant, quantot, valortot):
+    if quant < quantot:
+        preco = (quant*valortot)/quantot
+        return preco
+    elif quant > quantot:
+        preco = (quant*valortot)/quantot
+        return preco
+    else:
+        return valortot
+
+
+"""def cria_pdf(nome, endereço, lista_compras):
+    pdf = cv.Canvas("Dados_do_Cliente.pdf")
+    pdf.drawString(1000, 10,"Nome do cliente Endereço: Lista de compras: ")
+    pdf.save()"""
 
 def menu():
     print('-='*30)
@@ -26,31 +43,35 @@ def menu():
     menu_Entrada = 1
     while menu_Entrada != 0:
         menu_Entrada = int(input("PARA QUAL ÁREA DESEJA IR ? \n 1 - Folhas e hortaliças \n 2 - Frutas \n 3 - Lanches com trigo \n 4 - Lanches sem trigo \n 5 - Outros \n 6 - Pastinhas, antepastos e geleias. \n 7 - Raizes \n 0 - Sair \n:"))
+        
         # Dataframe Folhas
         if (menu_Entrada == 1):
            print(df_folhas.head(14)) 
            escolha_produto = 1
            while escolha_produto != 999:
-                escolha_produto = int(input("Escolha um produto pelo seu inidice (999 - encerra):"))
+                escolha_produto = int(input("Escolha um produto pelo seu indice (999 - encerra):"))
                 if escolha_produto == 999:
                    break
                 else:
-                    print(f'VOCÊ ESCOLHEU O PRODUTO : {df_folhas.loc[escolha_produto][0]} POR R$ {df_folhas.loc[escolha_produto][2]}.')
-                    compras[df_folhas.loc[escolha_produto][0]] = df_folhas.loc[escolha_produto][2]
+                    quanti = int(input("Agora informe a quantidade: "))
+                    variavel = calcular_preco(quanti, df_folhas.loc[escolha_produto][1], df_folhas.loc[escolha_produto][2])
+                    print(f'VOCÊ ESCOLHEU O PRODUTO : {df_folhas.loc[escolha_produto][0]} E FICOU POR R$ {variavel}.')
+                    compras[df_folhas.loc[escolha_produto][0]] = variavel
         
-        
+
         # Dataframe Frutas
         elif (menu_Entrada == 2):
            print(df_frutas.head(6)) 
            escolha_produto = 1
            while escolha_produto != 999:
-                escolha_produto = int(input("Escolha um produto pelo seu inidice (999 - encerra):"))
-
+                escolha_produto = int(input("Escolha um produto pelo seu indice (999 - encerra):"))
                 if escolha_produto == 999:
                    break
                 else:
-                    print(f'VOCÊ ESCOLHEU O PRODUTO : {df_frutas.loc[escolha_produto][0]} POR R$ {df_frutas.loc[escolha_produto][2]}.')
-                    compras[df_frutas.loc[escolha_produto][0]] = df_frutas.loc[escolha_produto][2]
+                    quanti = int(input("Agora informe a quantidade: "))
+                    variavel = calcular_preco(quanti, df_frutas.loc[escolha_produto][1], df_frutas.loc[escolha_produto][2])
+                    print(f'VOCÊ ESCOLHEU O PRODUTO : {df_frutas.loc[escolha_produto][0]} E FICOU POR R$ {variavel}.')
+                    compras[df_frutas.loc[escolha_produto][0]] = variavel
         
         
         # Dataframe Lanches com trigo
@@ -58,24 +79,76 @@ def menu():
            print(df_C_t.head(7)) 
            escolha_produto = 1
            while escolha_produto != 999:
-                escolha_produto = int(input("Escolha um produto pelo seu inidice (999 - encerra):"))
+                escolha_produto = int(input("Escolha um produto pelo seu indice (999 - encerra):"))
                 if escolha_produto == 999:
                    break
                 else:
-                    print(f'VOCÊ ESCOLHEU O PRODUTO : {df_C_t.loc[escolha_produto][0]} POR R$ {df_C_t.loc[escolha_produto][2]}.')
-                    compras[df_C_t.loc[escolha_produto][0]] = df_C_t.loc[escolha_produto][2]
+                    quanti = int(input("Agora informe a quantidade: "))
+                    variavel = calcular_preco(quanti, df_C_t.loc[escolha_produto][1], df_C_t.loc[escolha_produto][2])
+                    print(f'VOCÊ ESCOLHEU O PRODUTO : {df_C_t.loc[escolha_produto][0]} E FICOU POR R$ {variavel}.')
+                    compras[df_C_t.loc[escolha_produto][0]] = variavel
         
         
         # Dataframe Lanches sem trigo
-    """ elif (menu_Entrada == 4): 
+        elif (menu_Entrada == 4): 
            print(df_S_t.head(6)) 
            escolha_produto = 1
            while escolha_produto != 999:
-                escolha_produto = int(input("Escolha um produto pelo seu inidice (999 - encerra):"))
+                escolha_produto = int(input("Escolha um produto pelo seu indice (999 - encerra):"))
+                
                 if escolha_produto == 999:
                    break
                 else:
-                    print(f'VOCÊ ESCOLHEU O PRODUTO : {df_C_t.loc[escolha_produto][0]} POR R$ {df_C_t.loc[escolha_produto][2]}.')
-                    compras[df_C_t.loc[escolha_produto][0]] = df_C_t.loc[escolha_produto][2]"""
+                    quanti = int(input("Agora informe a quantidade: "))
+                    variavel = calcular_preco(quanti, df_S_t.loc[escolha_produto][1], df_S_t.loc[escolha_produto][2])
+                    print(f'VOCÊ ESCOLHEU O PRODUTO : {df_S_t.loc[escolha_produto][0]} E FICOU POR R$ {variavel}.')
+                    compras[df_S_t.loc[escolha_produto][0]] = variavel
 
 
+        # Dataframe Outros
+        elif (menu_Entrada == 5): 
+           print(df_outros.head(24)) 
+           escolha_produto = 1
+           while escolha_produto != 999:
+                escolha_produto = int(input("Escolha um produto pelo seu indice (999 - encerra):"))
+                if escolha_produto == 999:
+                   break
+                else:
+                    quanti = int(input("Agora informe a quantidade: "))
+                    variavel = calcular_preco(quanti, df_outros.loc[escolha_produto][1], df_outros.loc[escolha_produto][2])
+                    print(f'VOCÊ ESCOLHEU O PRODUTO : {df_outros.loc[escolha_produto][0]} E FICOU POR R$ {variavel}.')
+                    compras[df_outros.loc[escolha_produto][0]] = variavel
+
+
+        # Dataframe Pastinhas, antepastos e geleias.
+        elif (menu_Entrada == 6): 
+           print(df_pasti.head(8)) 
+           escolha_produto = 1
+           while escolha_produto != 999:
+                escolha_produto = int(input("Escolha um produto pelo seu indice (999 - encerra):"))
+                if escolha_produto == 999:
+                   break
+                else:
+                    quanti = int(input("Agora informe a quantidade: "))
+                    variavel = calcular_preco(quanti, df_pasti.loc[escolha_produto][1], df_pasti.loc[escolha_produto][2])
+                    print(f'VOCÊ ESCOLHEU O PRODUTO : {df_pasti.loc[escolha_produto][0]} E FICOU POR R$ {variavel}.')
+                    compras[df_pasti.loc[escolha_produto][0]] = variavel
+
+        
+        # Dataframe Raizes
+        elif (menu_Entrada == 7): 
+           print(df_raizes.head(8)) 
+           escolha_produto = 1
+           while escolha_produto != 999:
+                escolha_produto = int(input("Escolha um produto pelo seu indice (999 - encerra):"))
+                if escolha_produto == 999:
+                   break
+                else:
+                    quanti = int(input("Agora informe a quantidade: "))
+                    variavel = calcular_preco(quanti, df_raizes.loc[escolha_produto][1], df_raizes.loc[escolha_produto][2])
+                    print(f'VOCÊ ESCOLHEU O PRODUTO : {df_raizes.loc[escolha_produto][0]} E FICOU POR R$ {variavel}.')
+                    compras[df_raizes.loc[escolha_produto][0]] = variavel
+
+
+
+menu()
