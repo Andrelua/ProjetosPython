@@ -22,10 +22,21 @@ def calcular_preco(quant, quantot, valortot):
         return valortot
 
 
-"""def cria_pdf(nome, endereço, lista_compras):
+def cria_pdf(nome, endereço, lista_compras):
     pdf = cv.Canvas("Dados_do_Cliente.pdf")
-    pdf.drawString(1000, 10,"Nome do cliente Endereço: Lista de compras: ")
-    pdf.save()"""
+    pdf.setTitle("Dados de entrega")
+    pdf.drawString(100,800, f"Nome: {nome}.")
+    pdf.drawString(100, 790, f"Endereço: {endereço}.")
+    y = 750
+    for chave, valor in lista_compras.items():
+        pdf.drawString(100, y, f"Produto: {chave} Valor: R$ {valor[0]} Quantidade: {valor[1]}.")
+        y -= 10
+    soma = 0
+    for valor in lista_compras.values():
+        soma = soma + valor[0]
+    pdf.drawString(100, 100, f"A soma dos valores dos produtos é igual a: R${soma}")
+    
+    pdf.save()
 
 def menu():
     print('-='*30)
@@ -56,7 +67,7 @@ def menu():
                     quanti = int(input("Agora informe a quantidade: "))
                     variavel = calcular_preco(quanti, df_folhas.loc[escolha_produto][1], df_folhas.loc[escolha_produto][2])
                     print(f'VOCÊ ESCOLHEU O PRODUTO : {df_folhas.loc[escolha_produto][0]} E FICOU POR R$ {variavel}.')
-                    compras[df_folhas.loc[escolha_produto][0]] = variavel
+                    compras[df_folhas.loc[escolha_produto][0]] = [variavel, quanti]
         
 
         # Dataframe Frutas
@@ -71,7 +82,7 @@ def menu():
                     quanti = int(input("Agora informe a quantidade: "))
                     variavel = calcular_preco(quanti, df_frutas.loc[escolha_produto][1], df_frutas.loc[escolha_produto][2])
                     print(f'VOCÊ ESCOLHEU O PRODUTO : {df_frutas.loc[escolha_produto][0]} E FICOU POR R$ {variavel}.')
-                    compras[df_frutas.loc[escolha_produto][0]] = variavel
+                    compras[df_frutas.loc[escolha_produto][0]] = [variavel, quanti]
         
         
         # Dataframe Lanches com trigo
@@ -86,7 +97,7 @@ def menu():
                     quanti = int(input("Agora informe a quantidade: "))
                     variavel = calcular_preco(quanti, df_C_t.loc[escolha_produto][1], df_C_t.loc[escolha_produto][2])
                     print(f'VOCÊ ESCOLHEU O PRODUTO : {df_C_t.loc[escolha_produto][0]} E FICOU POR R$ {variavel}.')
-                    compras[df_C_t.loc[escolha_produto][0]] = variavel
+                    compras[df_C_t.loc[escolha_produto][0]] = [variavel, quanti]
         
         
         # Dataframe Lanches sem trigo
@@ -102,7 +113,7 @@ def menu():
                     quanti = int(input("Agora informe a quantidade: "))
                     variavel = calcular_preco(quanti, df_S_t.loc[escolha_produto][1], df_S_t.loc[escolha_produto][2])
                     print(f'VOCÊ ESCOLHEU O PRODUTO : {df_S_t.loc[escolha_produto][0]} E FICOU POR R$ {variavel}.')
-                    compras[df_S_t.loc[escolha_produto][0]] = variavel
+                    compras[df_S_t.loc[escolha_produto][0]] = [variavel, quanti]
 
 
         # Dataframe Outros
@@ -117,7 +128,7 @@ def menu():
                     quanti = int(input("Agora informe a quantidade: "))
                     variavel = calcular_preco(quanti, df_outros.loc[escolha_produto][1], df_outros.loc[escolha_produto][2])
                     print(f'VOCÊ ESCOLHEU O PRODUTO : {df_outros.loc[escolha_produto][0]} E FICOU POR R$ {variavel}.')
-                    compras[df_outros.loc[escolha_produto][0]] = variavel
+                    compras[df_outros.loc[escolha_produto][0]] = [variavel, quanti]
 
 
         # Dataframe Pastinhas, antepastos e geleias.
@@ -132,7 +143,7 @@ def menu():
                     quanti = int(input("Agora informe a quantidade: "))
                     variavel = calcular_preco(quanti, df_pasti.loc[escolha_produto][1], df_pasti.loc[escolha_produto][2])
                     print(f'VOCÊ ESCOLHEU O PRODUTO : {df_pasti.loc[escolha_produto][0]} E FICOU POR R$ {variavel}.')
-                    compras[df_pasti.loc[escolha_produto][0]] = variavel
+                    compras[df_pasti.loc[escolha_produto][0]] = [variavel, quanti]
 
         
         # Dataframe Raizes
@@ -147,8 +158,9 @@ def menu():
                     quanti = int(input("Agora informe a quantidade: "))
                     variavel = calcular_preco(quanti, df_raizes.loc[escolha_produto][1], df_raizes.loc[escolha_produto][2])
                     print(f'VOCÊ ESCOLHEU O PRODUTO : {df_raizes.loc[escolha_produto][0]} E FICOU POR R$ {variavel}.')
-                    compras[df_raizes.loc[escolha_produto][0]] = variavel
+                    compras[df_raizes.loc[escolha_produto][0]] = [variavel, quanti]
 
+        cria_pdf(nome_Cli, end_Cli, compras)
 
 
 menu()
