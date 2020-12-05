@@ -21,7 +21,7 @@ def menu():
 
     print('AGORA, VAMOS AS COMPRAS!')
     
-    compras = []
+    compras = {}
 
     menu_Entrada = 1
     while menu_Entrada != 0:
@@ -36,17 +36,46 @@ def menu():
                    break
                 else:
                     print(f'VOCÊ ESCOLHEU O PRODUTO : {df_folhas.loc[escolha_produto][0]} POR R$ {df_folhas.loc[escolha_produto][2]}.')
-                    compras.append(df_folhas.loc[escolha_produto])
+                    compras[df_folhas.loc[escolha_produto][0]] = df_folhas.loc[escolha_produto][2]
+        
+        
         # Dataframe Frutas
         elif (menu_Entrada == 2):
            print(df_frutas.head(6)) 
            escolha_produto = 1
            while escolha_produto != 999:
                 escolha_produto = int(input("Escolha um produto pelo seu inidice (999 - encerra):"))
+
                 if escolha_produto == 999:
                    break
                 else:
                     print(f'VOCÊ ESCOLHEU O PRODUTO : {df_frutas.loc[escolha_produto][0]} POR R$ {df_frutas.loc[escolha_produto][2]}.')
-                    compras.append(df_frutas.loc[escolha_produto])
-               
-menu()
+                    compras[df_frutas.loc[escolha_produto][0]] = df_frutas.loc[escolha_produto][2]
+        
+        
+        # Dataframe Lanches com trigo
+        elif (menu_Entrada == 3):
+           print(df_C_t.head(7)) 
+           escolha_produto = 1
+           while escolha_produto != 999:
+                escolha_produto = int(input("Escolha um produto pelo seu inidice (999 - encerra):"))
+                if escolha_produto == 999:
+                   break
+                else:
+                    print(f'VOCÊ ESCOLHEU O PRODUTO : {df_C_t.loc[escolha_produto][0]} POR R$ {df_C_t.loc[escolha_produto][2]}.')
+                    compras[df_C_t.loc[escolha_produto][0]] = df_C_t.loc[escolha_produto][2]
+        
+        
+        # Dataframe Lanches sem trigo
+    """ elif (menu_Entrada == 4): 
+           print(df_S_t.head(6)) 
+           escolha_produto = 1
+           while escolha_produto != 999:
+                escolha_produto = int(input("Escolha um produto pelo seu inidice (999 - encerra):"))
+                if escolha_produto == 999:
+                   break
+                else:
+                    print(f'VOCÊ ESCOLHEU O PRODUTO : {df_C_t.loc[escolha_produto][0]} POR R$ {df_C_t.loc[escolha_produto][2]}.')
+                    compras[df_C_t.loc[escolha_produto][0]] = df_C_t.loc[escolha_produto][2]"""
+
+
